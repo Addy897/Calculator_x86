@@ -12,6 +12,8 @@ section .data
 	op_len equ $ -	op_list	 
 	err2 db "Invalid choice",0xa
 	err2_len equ $ - err2
+	err3 db "Divide by zero",0xa
+	err3_len equ $ - err3
 	num1 dd 0
 	num2 dd 0
 	choice db 0
@@ -80,10 +82,13 @@ _start:
 	.div:
 		mov eax,[num1]
 		mov ebx,[num2]
+		cmp ebx,0
+		je .err
+		
 		cmp eax,0
-		jl .l1
-		jmp .l2
-		.l1:
+		jl .b1
+		jmp .b2
+		.b1:
 			mov edx,-1
 			imul edx
 			push eax
@@ -94,10 +99,15 @@ _start:
 			pop eax
 			
 					
-		.l2:
+		.b2:
 			xor edx,edx	
 			idiv ebx
 		jmp .done
+	.err:
+		push err3_len	
+		push err3
+		call print
+		jmp exit
 
 	.done:
 		mov [ans],eax
