@@ -8,5 +8,4 @@ A command-line calculator implemented in x86 assembly language. This project dem
 - **Error Handling:** Manages invalid choices.
 
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
